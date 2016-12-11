@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2016-12-11T13:03:48.531Z</updated>
+  <updated>2016-12-11T13:11:29.636Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -20,9 +20,9 @@
     <link href="http://yoursite.com/2015/08/02/VS%E4%B8%ADscanf%E5%87%BD%E6%95%B0%E8%AF%B4%E6%98%8E/"/>
     <id>http://yoursite.com/2015/08/02/VS中scanf函数说明/</id>
     <published>2015-08-02T11:51:45.000Z</published>
-    <updated>2016-12-11T13:03:48.531Z</updated>
+    <updated>2016-12-11T13:11:29.636Z</updated>
     
-    <content type="html">&lt;p&gt;众所周知，由于安全原因，vs2012版本及其以上会出现scanf函数报错的情形，编译时便会提示如下错误：&lt;/p&gt;
+    <content type="html">&lt;p&gt;众所周知，由于安全原因，vs2012版本及其以上会出现scanf函数报错的情形，编译时便会提示如下错误&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;：&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;error C4996: ‘scanf’: This function or variable may be unsafe. Consider using scanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -31,9 +31,12 @@
 &lt;h3 id=&quot;一般来说，直接解决该问题方法有三种：&quot;&gt;&lt;a href=&quot;#一般来说，直接解决该问题方法有三种：&quot; class=&quot;headerlink&quot; title=&quot;一般来说，直接解决该问题方法有三种：&quot;&gt;&lt;/a&gt;一般来说，直接解决该问题方法有三种：&lt;/h3&gt;&lt;p&gt;方法一：将原来的旧函数替换成新的 Security CRT functions，即替换成为新的函数scanf_s，但是scanf_s函数比scanf函数多了一个参数，即读取个数参数。例如scanf从输入流中读取一个字符类型字节,scanf(“%c”,&amp;amp;ch),则若使用scanf_s需改为scanf_s(“%c”,&amp;amp;ch,1);&lt;/p&gt;
 &lt;p&gt;方法二：以下方法的原理为屏蔽这个错误：&lt;/p&gt;
 &lt;ol&gt;
-&lt;li&gt;&lt;p&gt;在预编译头文件stdafx.h里（注意：一定要在没有include任何头文件之前）定义下面的宏：&lt;/p&gt;
+&lt;li&gt;在预编译头文件stdafx.h里（注意：一定要在没有include任何头文件之前）定义下面的宏：&lt;/li&gt;
+&lt;/ol&gt;
+&lt;blockquote&gt;
 &lt;pre&gt;&lt;code&gt;#define _CRT_SECURE_NO_DEPRECATE
-&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/blockquote&gt;
+&lt;ol&gt;
 &lt;li&gt;&lt;p&gt;或声明 #param warning(disable:4996)&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p&gt;更改预处理定义：&lt;/p&gt;
@@ -68,9 +71,7 @@
     
     <summary type="html">
     
-      &lt;p&gt;众所周知，由于安全原因，vs2012版本及其以上会出现scanf函数报错的情形，编译时便会提示如下错误：&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;error C4996: ‘scanf’: This function or variable may be unsafe. C
+      &lt;p&gt;众所周知，由于安全原因，vs2012版本及其以上会出现scanf函数报错的情形，编译时便会提示如下错误
     
     </summary>
     
@@ -84,13 +85,21 @@
     <link href="http://yoursite.com/2015/07/10/Hello-Future/"/>
     <id>http://yoursite.com/2015/07/10/Hello-Future/</id>
     <published>2015-07-10T04:10:26.000Z</published>
-    <updated>2016-12-11T12:14:22.439Z</updated>
+    <updated>2016-12-11T13:16:48.727Z</updated>
     
     <content type="html">&lt;p&gt;撒花撒花，博客搭好，当然要立一些flags啦！希望这个hexo博客能让我更加进步！&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;h2 id=&quot;About-Me&quot;&gt;&lt;a href=&quot;#About-Me&quot; class=&quot;headerlink&quot; title=&quot;About Me&quot;&gt;&lt;/a&gt;About Me&lt;/h2&gt;&lt;h3 id=&quot;College&quot;&gt;&lt;a href=&quot;#College&quot; class=&quot;headerlink&quot; title=&quot;College&quot;&gt;&lt;/a&gt;College&lt;/h3&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ Huazhong University of Science and Technology.&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;h3 id=&quot;hobby&quot;&gt;&lt;a href=&quot;#hobby&quot; class=&quot;headerlink&quot; title=&quot;hobby&quot;&gt;&lt;/a&gt;hobby&lt;/h3&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ Tennis, Music, Reading.&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;h3 id=&quot;Dream-Flags&quot;&gt;&lt;a href=&quot;#Dream-Flags&quot; class=&quot;headerlink&quot; title=&quot;Dream? Flags!&quot;&gt;&lt;/a&gt;Dream? Flags!&lt;/h3&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ Good Good Study.&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;h3 id=&quot;Maxim&quot;&gt;&lt;a href=&quot;#Maxim&quot; class=&quot;headerlink&quot; title=&quot;Maxim&quot;&gt;&lt;/a&gt;Maxim&lt;/h3&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ 以最小的代价完成生命各个维度的尝试。&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h2 id=&quot;About-Me&quot;&gt;&lt;a href=&quot;#About-Me&quot; class=&quot;headerlink&quot; title=&quot;About Me&quot;&gt;&lt;/a&gt;About Me&lt;/h2&gt;&lt;h3 id=&quot;College&quot;&gt;&lt;a href=&quot;#College&quot; class=&quot;headerlink&quot; title=&quot;College&quot;&gt;&lt;/a&gt;College&lt;/h3&gt;&lt;blockquote&gt;
+&lt;p&gt;Huazhong University of Science and Technology.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&quot;Hobby&quot;&gt;&lt;a href=&quot;#Hobby&quot; class=&quot;headerlink&quot; title=&quot;Hobby&quot;&gt;&lt;/a&gt;Hobby&lt;/h3&gt;&lt;blockquote&gt;
+&lt;p&gt;Tennis, Music, Reading.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&quot;Dream-Flags&quot;&gt;&lt;a href=&quot;#Dream-Flags&quot; class=&quot;headerlink&quot; title=&quot;Dream? Flags!&quot;&gt;&lt;/a&gt;Dream? Flags!&lt;/h3&gt;&lt;blockquote&gt;
+&lt;p&gt;Le vent se lève, il faut tenter de vivre.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&quot;Maxim&quot;&gt;&lt;a href=&quot;#Maxim&quot; class=&quot;headerlink&quot; title=&quot;Maxim&quot;&gt;&lt;/a&gt;Maxim&lt;/h3&gt;&lt;blockquote&gt;
+&lt;p&gt;以最小的代价完成生命各个维度的尝试。&lt;/p&gt;
+&lt;/blockquote&gt;
 </content>
     
     <summary type="html">
