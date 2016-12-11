@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2016-12-11T11:33:55.202Z</updated>
+  <updated>2016-12-11T11:57:12.185Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,26 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>my new post</title>
+    <link href="http://yoursite.com/2016/07/11/my-new-post/"/>
+    <id>http://yoursite.com/2016/07/11/my-new-post/</id>
+    <published>2016-07-11T11:51:45.000Z</published>
+    <updated>2016-12-11T11:57:12.185Z</updated>
+    
+    <content type="html">&lt;h2 id=&quot;About-Me&quot;&gt;&lt;a href=&quot;#About-Me&quot; class=&quot;headerlink&quot; title=&quot;About Me&quot;&gt;&lt;/a&gt;About Me&lt;/h2&gt;&lt;h3 id=&quot;College&quot;&gt;&lt;a href=&quot;#College&quot; class=&quot;headerlink&quot; title=&quot;College&quot;&gt;&lt;/a&gt;College&lt;/h3&gt;</content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;About-Me&quot;&gt;&lt;a href=&quot;#About-Me&quot; class=&quot;headerlink&quot; title=&quot;About Me&quot;&gt;&lt;/a&gt;About Me&lt;/h2&gt;&lt;h3 id=&quot;College&quot;&gt;&lt;a href=&quot;#College&quot; class=&quot;header
+    
+    </summary>
+    
+    
+      <category term="blog" scheme="http://yoursite.com/tags/blog/"/>
+    
+  </entry>
   
   <entry>
     <title>Hello Future</title>
