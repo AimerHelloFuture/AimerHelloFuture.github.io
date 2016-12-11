@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2016-11-22T05:19:42.172Z</updated>
+  <updated>2016-12-11T11:33:55.202Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -17,10 +17,10 @@
   
   <entry>
     <title>Hello Future</title>
-    <link href="http://yoursite.com/2016/06/14/Hello-Future/"/>
-    <id>http://yoursite.com/2016/06/14/Hello-Future/</id>
-    <published>2016-06-14T04:10:26.000Z</published>
-    <updated>2016-11-22T05:19:42.172Z</updated>
+    <link href="http://yoursite.com/2016/02/10/Hello-Future/"/>
+    <id>http://yoursite.com/2016/02/10/Hello-Future/</id>
+    <published>2016-02-10T04:10:26.000Z</published>
+    <updated>2016-12-11T11:33:55.202Z</updated>
     
     <content type="html">&lt;p&gt;撒花撒花，博客搭好，当然要立一些flags啦！希望这个hexo博客能让我更加进步！&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;h2 id=&quot;About-Me&quot;&gt;&lt;a href=&quot;#About-Me&quot; class=&quot;headerlink&quot; title=&quot;About Me&quot;&gt;&lt;/a&gt;About Me&lt;/h2&gt;&lt;h3 id=&quot;College&quot;&gt;&lt;a href=&quot;#College&quot; class=&quot;headerlink&quot; title=&quot;College&quot;&gt;&lt;/a&gt;College&lt;/h3&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ Huazhong University of Science and Technology.&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
