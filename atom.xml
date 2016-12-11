@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2016-12-11T12:14:37.525Z</updated>
+  <updated>2016-12-11T12:42:40.177Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -16,17 +16,57 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>my new post</title>
-    <link href="http://yoursite.com/2015/08/02/my-new-post/"/>
-    <id>http://yoursite.com/2015/08/02/my-new-post/</id>
+    <title>VS��scanf����˵��</title>
+    <link href="http://yoursite.com/2015/08/02/VS%E4%B8%ADscanf%E5%87%BD%E6%95%B0%E8%AF%B4%E6%98%8E/"/>
+    <id>http://yoursite.com/2015/08/02/VS中scanf函数说明/</id>
     <published>2015-08-02T11:51:45.000Z</published>
-    <updated>2016-12-11T12:14:37.525Z</updated>
+    <updated>2016-12-11T12:42:40.177Z</updated>
     
-    <content type="html">&lt;h2 id=&quot;About-Me&quot;&gt;&lt;a href=&quot;#About-Me&quot; class=&quot;headerlink&quot; title=&quot;About Me&quot;&gt;&lt;/a&gt;About Me&lt;/h2&gt;&lt;h3 id=&quot;College&quot;&gt;&lt;a href=&quot;#College&quot; class=&quot;headerlink&quot; title=&quot;College&quot;&gt;&lt;/a&gt;College&lt;/h3&gt;</content>
+    <content type="html">&lt;p&gt;������֪�����ڰ�ȫԭ����vs2012�汾�������ϻ�����scanf�������������Σ�����ʱ������ʾ���´�����&lt;/p&gt;
+&lt;p&gt;error C4996: ‘scanf’: This function or variable may be unsafe. Consider using scanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.&lt;/p&gt;
+&lt;p&gt;�������ͣ�&lt;/p&gt;
+&lt;p&gt;΢���������ͱ�����Ҫ��Ϊ��ЩC���ĺ������ܶຯ���ڲ��ǲ����в��������ģ�����Խ�����ģ���΢������ʹ����Щ�������ڴ��쳣�����Ծ͸�д��ͬ�����ܵĺ�������д�˵ĺ��������˲����ļ��⣬ʹ����Щ�µĺ���������ȫ�ͱ��ݡ�������Щ��д�ĺ����㲻��ר��ȥ���䣬��Ϊ����������ÿ�������ڸ�������ʱ��������������Ӧ�İ�ȫ�������鿴������Ϣ�Ϳ��Ի�֪����ʹ��ʱҲ�ٲ鿴һ��MSDN��ϸ�˽⡣&lt;/p&gt;
+&lt;p&gt;һ����˵��ֱ�ӽ��������ⷽ�������֣�&lt;/p&gt;
+&lt;p&gt;����һ����ԭ���ľɺ����滻���µ� Security CRT functions�����滻��Ϊ�µĺ���scanf_s������scanf_s������scanf��������һ������������ȡ��������������scanf���������ж�ȡһ���ַ������ֽ�,scanf(“%c”,&amp;amp;ch),����ʹ��scanf_s����Ϊscanf_s(“%c”,&amp;amp;ch,1);&lt;/p&gt;
+&lt;p&gt;�����������·�����ԭ��Ϊ��������������&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;1. ��Ԥ����ͷ�ļ�stdafx.h�ע�⣺һ��Ҫ��û��include�κ�ͷ�ļ�֮ǰ�����������ĺ꣺
+
+      #define _CRT_SECURE_NO_DEPRECATE
+
+2. ������ #param warning(disable:4996)
+
+3. ����Ԥ�������壺
+
+    ��Ŀ-&amp;gt;����-&amp;gt;��������-&amp;gt;C/C++ -&amp;gt; Ԥ������ -&amp;gt; Ԥ���������壬���ӣ�
+
+   _CRT_SECURE_NO_DEPRECATE
+
+   ������ע������Ԥ��������ʱ�������������ϸþ仰���������仰ǰ�漴δ��֮ǰ����������һ���ֺţ���Ӣ�����뷨ģʽ��Ŷ~����
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;��������������û��ʹ�ø��Ӱ�ȫ�� CRT ��������Ȼ����һ��ֵ���Ƽ��ĺ÷������������ֲ���һ��һ���ظĺ����������ﻹ��һ���������ķ�����&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt; ��Ԥ����ͷ�ļ� stdafx.h �ͬ��Ҫ��û��include�κ�ͷ�ļ�֮ǰ�����������ĺ꣺
+
+ #define _CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES 1
+
+ �����ӵ�ʱ�������Զ����ɺ����滻�� Security CRT functions ��
+
+ע�⣺����������Ȼʹ�����µĺ��������ǲ�����������(ԭ��������)���㻹��ͬʱʹ�÷�����(-_-)����ʵ��Ӧ��Ԥ����ͷ�ļ� stdafx.h �������������䣺
+
+            #define _CRT_SECURE_NO_DEPRECATE
+
+            #define _CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES 1
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;��Ȼ�����˸ñ������⣬���Ǻܶ�ͯЬ�ᷢ������ʱ��scanf������Ȼ��δ���������ó�����ȷִ�У�����������ʱ���ᷢ��scanf�������������ַ���ԭ�򣬼���û�а취���������⣬����Ϊʲô�أ�&lt;/p&gt;
+&lt;p&gt;��Ϊscanfֻ�Ƕ���һ���ַ�,����������ʱʵ������������:�ַ�+�س�(Enter),Enter������”\n”Ҳ�����뻺������,�´ε��� scanfʱ�ͻ�ֱ�Ӷ��� �������ǵȴ����ٴ�����!�������ǲ��ᳫʹ�� scanf(“%c”, …),�ر��ǲ��ᳫ��������ѭ���С���Ҳ��΢����д���ຯ����ԭ������ô���ν����أ�&lt;/p&gt;
+&lt;p&gt;һ����˵����Ҫ���������֣�&lt;/p&gt;
+&lt;p&gt;����һ��ֻҪ�ټ�һ��scanf�����ˡ�&lt;/p&gt;
+&lt;p&gt;��������ʹ�ú���fflush����������������ÿ�������ַ���scanf����ǰ��,����fflush(stdin);&lt;/p&gt;
+&lt;p&gt;���������� scanf(“%c”, &amp;amp;ch); �޸�Ϊ:     scanf(“ %c”, &amp;amp;ch);    /&lt;em&gt;��%ǰ����һ���ո�&lt;/em&gt;/&lt;/p&gt;
+&lt;p&gt;�����ģ��� scanf(“%c”, &amp;amp;ch); �޸�Ϊ:     scanf(“%c%&lt;em&gt;c”, &amp;amp;ch);   %&lt;/em&gt;c������һ�������ַ�����˼.������scanf��һ���﷨.������%�͸�ʽ�ַ�֮����һ��&lt;em&gt;�žͿ�������������������.���統ִ������:scanf(“%c,%&lt;/em&gt;c,%c”,&amp;amp;a,&amp;amp;b);ʱ,������m,n,p������ĸ��,a��ֵΪm,bֵΪp,n�������ˡ�&lt;/p&gt;
+</content>
     
     <summary type="html">
     
-      &lt;h2 id=&quot;About-Me&quot;&gt;&lt;a href=&quot;#About-Me&quot; class=&quot;headerlink&quot; title=&quot;About Me&quot;&gt;&lt;/a&gt;About Me&lt;/h2&gt;&lt;h3 id=&quot;College&quot;&gt;&lt;a href=&quot;#College&quot; class=&quot;header
+      &lt;p&gt;������֪�����ڰ�ȫԭ����vs2012�汾�������ϻ�����scanf�������������Σ�����ʱ������ʾ���´�����&lt;/p&gt;
+&lt;p&gt;error C4996: ‘scanf’: This function or variable
     
     </summary>
     
