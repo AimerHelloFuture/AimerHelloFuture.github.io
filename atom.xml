@@ -125,46 +125,6 @@
   </entry>
   
   <entry>
-    <title>test</title>
-    <link href="//boyoung.me/2015/08/01/test/"/>
-    <id>//boyoung.me/2015/08/01/test/</id>
-    <published>2015-08-01T08:04:33.000Z</published>
-    <updated>2016-12-12T13:01:48.976Z</updated>
-    
-    <content type="html"><![CDATA[<p>算</p>
-<pre><code>
-这是一个代码区块。
-int a = b;
-a
-dd
-</code></pre>
-
-<p><img src="/images/20160210.jpg" alt=""></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;算&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;
-这是一个代码区块。
-int a = b;
-a
-dd
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/20160210.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-
-    
-    </summary>
-    
-    
-      <category term="blog" scheme="//boyoung.me/tags/blog/"/>
-    
-      <category term="me" scheme="//boyoung.me/tags/me/"/>
-    
-  </entry>
-  
-  <entry>
     <title>Hello Future</title>
     <link href="//boyoung.me/2015/07/10/Hello-Future/"/>
     <id>//boyoung.me/2015/07/10/Hello-Future/</id>

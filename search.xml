@@ -80,21 +80,6 @@
     </entry>
     
     <entry>
-      <title><![CDATA[test]]></title>
-      <url>//boyoung.me/2015/08/01/test/</url>
-      <content type="html"><![CDATA[<p>算</p>
-<pre><code>
-这是一个代码区块。
-int a = b;
-a
-dd
-</code></pre>
-
-<p><img src="/images/20160210.jpg" alt=""></p>
-]]></content>
-    </entry>
-    
-    <entry>
       <title><![CDATA[Hello Future]]></title>
       <url>//boyoung.me/2015/07/10/Hello-Future/</url>
       <content type="html"><![CDATA[<p>撒花撒花，博客搭好，当然要立一些flags啦！希望这个hexo博客能让我更加进步！<a id="more"></a></p>
