@@ -2,11 +2,11 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>Boyoung</title>
   
-  <link href="/atom.xml" rel="self"/>
+  <link href="/child/atom.xml" rel="self"/>
   
-  <link href="http://yoursite.com/"/>
+  <link href="//boyoung.me/"/>
   <updated>2016-12-11T13:11:29.636Z</updated>
-  <id>http://yoursite.com/</id>
+  <id>//boyoung.me/</id>
   
   <author>
     <name>Boyoung</name>
@@ -17,8 +17,8 @@
   
   <entry>
     <title>VS中scanf函数说明</title>
-    <link href="http://yoursite.com/2015/08/02/VS%E4%B8%ADscanf%E5%87%BD%E6%95%B0%E8%AF%B4%E6%98%8E/"/>
-    <id>http://yoursite.com/2015/08/02/VS中scanf函数说明/</id>
+    <link href="//boyoung.me/2015/08/02/VS%E4%B8%ADscanf%E5%87%BD%E6%95%B0%E8%AF%B4%E6%98%8E/"/>
+    <id>//boyoung.me/2015/08/02/VS中scanf函数说明/</id>
     <published>2015-08-02T11:51:45.000Z</published>
     <updated>2016-12-11T13:11:29.636Z</updated>
     
@@ -76,14 +76,14 @@
     </summary>
     
     
-      <category term="blog" scheme="http://yoursite.com/tags/blog/"/>
+      <category term="blog" scheme="//boyoung.me/tags/blog/"/>
     
   </entry>
   
   <entry>
     <title>Hello Future</title>
-    <link href="http://yoursite.com/2015/07/10/Hello-Future/"/>
-    <id>http://yoursite.com/2015/07/10/Hello-Future/</id>
+    <link href="//boyoung.me/2015/07/10/Hello-Future/"/>
+    <id>//boyoung.me/2015/07/10/Hello-Future/</id>
     <published>2015-07-10T04:10:26.000Z</published>
     <updated>2016-12-11T13:16:48.727Z</updated>
     
@@ -109,7 +109,7 @@
     </summary>
     
     
-      <category term="essay" scheme="http://yoursite.com/tags/essay/"/>
+      <category term="essay" scheme="//boyoung.me/tags/essay/"/>
     
   </entry>
   
