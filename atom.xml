@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>Boyoung</title>
   
-  <link href="/child/atom.xml" rel="self"/>
+  <link href="/atom.xml" rel="self"/>
   
   <link href="//boyoung.me/"/>
   <updated>2016-12-11T13:11:29.636Z</updated>
