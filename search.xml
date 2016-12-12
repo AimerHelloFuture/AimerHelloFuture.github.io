@@ -5,7 +5,7 @@
     
     <entry>
       <title><![CDATA[VS中scanf函数说明]]></title>
-      <url>boyoung.me/2015/08/02/VS%E4%B8%ADscanf%E5%87%BD%E6%95%B0%E8%AF%B4%E6%98%8E/</url>
+      <url>http://yoursite.com/2015/08/02/VS%E4%B8%ADscanf%E5%87%BD%E6%95%B0%E8%AF%B4%E6%98%8E/</url>
       <content type="html"><![CDATA[<p>众所周知，由于安全原因，vs2012版本及其以上会出现scanf函数报错的情形，编译时便会提示如下错误<a id="more"></a>：</p>
 <blockquote>
 <p>error C4996: ‘scanf’: This function or variable may be unsafe. Consider using scanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.</p>
@@ -56,7 +56,7 @@
     
     <entry>
       <title><![CDATA[Hello Future]]></title>
-      <url>boyoung.me/2015/07/10/Hello-Future/</url>
+      <url>http://yoursite.com/2015/07/10/Hello-Future/</url>
       <content type="html"><![CDATA[<p>撒花撒花，博客搭好，当然要立一些flags啦！希望这个hexo博客能让我更加进步！<a id="more"></a></p>
 <h2 id="About-Me"><a href="#About-Me" class="headerlink" title="About Me"></a>About Me</h2><h3 id="College"><a href="#College" class="headerlink" title="College"></a>College</h3><blockquote>
 <p>Huazhong University of Science and Technology.</p>
