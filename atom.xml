@@ -129,6 +129,54 @@
   </entry>
   
   <entry>
+    <title>Hexo博客</title>
+    <link href="//boyoung.me/2015/07/11/Hexo%E5%8D%9A%E5%AE%A2/"/>
+    <id>//boyoung.me/2015/07/11/Hexo博客/</id>
+    <published>2015-07-11T13:07:09.000Z</published>
+    <updated>2017-03-20T11:58:27.845Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="Hexo博客初建"><a href="#Hexo博客初建" class="headerlink" title="Hexo博客初建"></a>Hexo博客初建</h2><p>闲来无事，便打算给自己做一个个人网站，用于分享知识、记录心情的个人小站，最后喜欢上了hexo，这是初衷。<a id="more"></a></p>
+<p>具体的搭建方法也是参考的别人，具体详见<a href="http://qrframe.com/2016/07/13/%E4%BD%BF%E7%94%A8Hexo%E5%9C%A8github%E4%B8%8A%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E7%BD%91%E7%AB%99%E7%9A%84%E6%93%8D%E4%BD%9C%E8%AE%B0%E5%BD%95/" target="_blank" rel="external">使用hexo搭建个人网站</a>。</p>
+<p>我使用的主题为yelee，简洁、美观而又大方。具体的可以详细搜索做这个主题前端的大佬，可以详细参考下。</p>
+<p>博客搭建好后，还可以绑定自己的域名，我使用的域名boyoung.me便是从阿里云购买的，详细绑定方法见<a href="http://quantumman.me/blog/setting-up-a-domain-with-gitHub-pages.html" target="_blank" rel="external">GitHub Pages 绑定来自阿里云的域名</a>。</p>
+<h2 id="Hexo简单使用"><a href="#Hexo简单使用" class="headerlink" title="Hexo简单使用"></a>Hexo简单使用</h2><h3 id="1、new"><a href="#1、new" class="headerlink" title="1、new"></a>1、new</h3><blockquote>
+<p>hexo new [layout] <title></title></p>
+</blockquote>
+<p>新建一篇文章。如果没有设置 layout 的话，默认使用 _config.yml 中的 default_layout 参数代替。如果标题包含空格的话，请使用引号括起来。</p>
+<h3 id="2、generate"><a href="#2、generate" class="headerlink" title="2、generate"></a>2、generate</h3><blockquote>
+<p>hexo g</p>
+</blockquote>
+<p>生成静态文件。</p>
+<h3 id="3、server"><a href="#3、server" class="headerlink" title="3、server"></a>3、server</h3><blockquote>
+<p>hexo s</p>
+</blockquote>
+<p>启动服务器。</p>
+<h3 id="4、deploy"><a href="#4、deploy" class="headerlink" title="4、deploy"></a>4、deploy</h3><blockquote>
+<p>hexo g</p>
+</blockquote>
+<p>部署网站。</p>
+<h3 id="5、clean"><a href="#5、clean" class="headerlink" title="5、clean"></a>5、clean</h3><blockquote>
+<p>hexo clean</p>
+</blockquote>
+<p>清除缓存文件 (db.json) 和已生成的静态文件 (public)。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;Hexo博客初建&quot;&gt;&lt;a href=&quot;#Hexo博客初建&quot; class=&quot;headerlink&quot; title=&quot;Hexo博客初建&quot;&gt;&lt;/a&gt;Hexo博客初建&lt;/h2&gt;&lt;p&gt;闲来无事，便打算给自己做一个个人网站，用于分享知识、记录心情的个人小站，最后喜欢上了hexo，这是初衷。
+    
+    </summary>
+    
+    
+      <category term="blog" scheme="//boyoung.me/tags/blog/"/>
+    
+      <category term="环境搭配" scheme="//boyoung.me/tags/%E7%8E%AF%E5%A2%83%E6%90%AD%E9%85%8D/"/>
+    
+      <category term="Hexo起始" scheme="//boyoung.me/tags/Hexo%E8%B5%B7%E5%A7%8B/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Hello Future</title>
     <link href="//boyoung.me/2015/07/10/Hello-Future/"/>
     <id>//boyoung.me/2015/07/10/Hello-Future/</id>
