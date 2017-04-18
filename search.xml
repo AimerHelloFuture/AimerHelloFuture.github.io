@@ -4,6 +4,148 @@
   
     
     <entry>
+      <title><![CDATA[操作系统fork()]]></title>
+      <url>//boyoung.me/2017/04/02/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9Ffork()/</url>
+      <content type="html"><![CDATA[<h2 id="一道题引发的血案"><a href="#一道题引发的血案" class="headerlink" title="一道题引发的血案"></a>一道题引发的血案</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  fork() || fork()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>问：共创建了几个进程？</p>
+<p>答案为3个。现在来进行分析：<a id="more"></a></p>
+<p>fork()给子进程返回一个零值，而给父进程返回一个非零值；</p>
+<p>在main这个主进程中，首先执行<strong> <del>fork()</del> </strong> || fork(), 左边的fork()返回一个非零值，</p>
+<p>根据||的短路原则，前面的表达式为真时，后面的表达式不执行，</p>
+<p>故包含main的这个主进程创建了一个子进程。</p>
+<p>由于子进程会复制父进程，而且子进程会根据其返回值继续执行，</p>
+<p>因此在子进程中，<strong> <del>fork()</del> </strong>||fork()这条语句左边表达式的返回值是0, </p>
+<p>所以||右边的表达式要执行，这时在子进程中又创建了一个进程，</p>
+<p>即main进程-&gt;子进程-&gt;子进程，一共创建了3个进程。</p>
+<p>接下来详细介绍fork()函数。</p>
+<p>该篇文章的完成参考了<a href="http://www.cnblogs.com/bastard/archive/2012/08/31/2664896.html" target="_blank" rel="external">一位博客</a>，在此感谢。</p>
+<h2 id="fork入门"><a href="#fork入门" class="headerlink" title="fork入门"></a>fork入门</h2><p>fork()函数通过系统调用创建一个与原来进程几乎完全相同的进程，</p>
+<p>一个进程调用fork()函数后，系统先给新的进程分配资源，例如存储数据和代码的空间。</p>
+<p>然后把原来的进程的所有值都复制到新的新进程中，只有少数值与原来的进程的值不同。</p>
+<p>相当于克隆了一个自己。</p>
+<p>先来看一个例子：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span> <span class="params">()</span>   </span><br><span class="line"></span>&#123;   </span><br><span class="line">    <span class="keyword">pid_t</span> fpid; </span><br><span class="line">    <span class="keyword">int</span> count=<span class="number">0</span>;  </span><br><span class="line">    fpid=fork();   </span><br><span class="line">    <span class="keyword">if</span> (fpid &lt; <span class="number">0</span>)   </span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"error in fork!"</span>);   </span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (fpid == <span class="number">0</span>) &#123;  </span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"i am the child process, my process id is %d/n"</span>,getpid());   </span><br><span class="line">        count++;  </span><br><span class="line">    &#125;  </span><br><span class="line">    <span class="keyword">else</span> &#123;  </span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"i am the parent process, my process id is %d/n"</span>,getpid());   </span><br><span class="line">        count++;  </span><br><span class="line">    &#125;  </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"统计结果是: %d/n"</span>,count);  </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出结果是：</p>
+<p>i am the child process, my process id is 5574</p>
+<p>统计结果是: 1</p>
+<p>i am the parent process, my process id is 5573</p>
+<p>统计结果是: 1</p>
+<p>解析：在语句fpid=fork()之前，只有一个进程在执行这段代码，但在这条语句之后，</p>
+<p>就变成两个进程在执行了，这两个进程的几乎完全相同，</p>
+<p>将要执行的下一条语句都是if(fpid&lt;0)……</p>
+<p>fork把进程当前的情况拷贝了一份，执行fork时，进程已经执行完了int count = 0，</p>
+<p>fork只拷贝下一个要执行的代码到新的进程，因此不是从#include开始复制代码。</p>
+<p>注意！！！严格来说拷贝代码是不正确，其实是父子进程共享代码，上述解释仅是便于理解。</p>
+<p>fork调用的一个奇妙之处就是它仅仅被调用一次，却能够返回两次，它可能有三种不同的返回值：</p>
+<ol>
+<li>在父进程中，fork返回新创建子进程的进程ID；</li>
+<li>在子进程中，fork返回0；</li>
+<li>如果出现错误，fork返回一个负值。</li>
+</ol>
+<p>引用一位网友的话来解释fpid的值为什么在父子进程中不同。</p>
+<p>“其实就相当于链表，进程形成了链表，父进程的fpid指向子进程的进程id,</p>
+<p>因为子进程没有子进程，所以其fpid为0。“</p>
+<p>创建新进程成功后，系统中出现两个基本完全相同的进程，</p>
+<p>这两个进程执行没有固定的先后顺序，哪个进程先执行要看系统的进程调度策略。</p>
+<p>每个进程都有一个独特（互不相同）的进程标识符（process ID），</p>
+<p>可以通过getpid（）函数获得，还有一个记录父进程pid的变量，</p>
+<p>可以通过getppid（）函数获得变量的值。</p>
+<h2 id="fork进阶"><a href="#fork进阶" class="headerlink" title="fork进阶"></a>fork进阶</h2><p>再看一个例子：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span>  </span><br><span class="line"></span>&#123;  </span><br><span class="line">   <span class="keyword">int</span> i=<span class="number">0</span>;  </span><br><span class="line">   <span class="built_in">printf</span>(<span class="string">"i son/pa ppid pid  fpid/n"</span>);  </span><br><span class="line">   <span class="comment">//ppid指当前进程的父进程pid  </span></span><br><span class="line">   <span class="comment">//pid指当前进程的pid,  </span></span><br><span class="line">   <span class="comment">//fpid指fork返回给当前进程的值  </span></span><br><span class="line">   <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;<span class="number">2</span>;i++)&#123;  </span><br><span class="line">       <span class="keyword">pid_t</span> fpid=fork();  </span><br><span class="line">       <span class="keyword">if</span>(fpid==<span class="number">0</span>)  </span><br><span class="line">           <span class="built_in">printf</span>(<span class="string">"%d child  %4d %4d %4d/n"</span>,i,getppid(),getpid(),fpid);  </span><br><span class="line">       <span class="keyword">else</span>  </span><br><span class="line">           <span class="built_in">printf</span>(<span class="string">"%d parent %4d %4d %4d/n"</span>,i,getppid(),getpid(),fpid);  </span><br><span class="line">   &#125;  </span><br><span class="line">   <span class="keyword">return</span> <span class="number">0</span>;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出为：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">i son/pa ppid pid  fpid</span><br><span class="line"><span class="number">0</span> parent <span class="number">2043</span> <span class="number">3224</span> <span class="number">3225</span></span><br><span class="line"><span class="number">0</span> child  <span class="number">3224</span> <span class="number">3225</span>    <span class="number">0</span></span><br><span class="line"><span class="number">1</span> parent <span class="number">2043</span> <span class="number">3224</span> <span class="number">3226</span></span><br><span class="line"><span class="number">1</span> parent <span class="number">3224</span> <span class="number">3225</span> <span class="number">3227</span></span><br><span class="line"><span class="number">1</span> child     <span class="number">1</span> <span class="number">3227</span>    <span class="number">0</span></span><br><span class="line"><span class="number">1</span> child     <span class="number">1</span> <span class="number">3226</span>    <span class="number">0</span></span><br></pre></td></tr></table></figure>
+<p>分析：</p>
+<ol>
+<li><p>在父进程中，指令执行到for循环中，i=0，接着执行fork，</p>
+<p>fork执行完后，系统中出现两个进程，分别是p3224和p3225（用pxxxx表示进程id为xxxx的进程）。</p>
+<p>可以看到父进程p3224的父进程是p2043，子进程p3225的父进程正好是p3224。</p>
+<p>用一个链表来表示这个关系：p2043-&gt;p3224-&gt;p3225 </p>
+<p>第一次fork后，p3224（父进程）的变量为i=0，fpid=3225，</p>
+<p>​              p3225（子进程）的变量为i=0，fpid=0，</p>
+<p>所以打印前两行结果：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">0</span> parent <span class="number">2043</span> <span class="number">3224</span> <span class="number">3225</span></span><br><span class="line"><span class="number">0</span> child  <span class="number">3224</span> <span class="number">3225</span>    <span class="number">0</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>接下来，假设父进程p3224先执行，当进入下一个循环时，i=1，</p>
+<p>接着执行fork，系统中又新增一个进程p3226，</p>
+<p>对于此时的父进程，</p>
+<p>p2043-&gt;p3224（当前进程）-&gt;p3226（被创建的子进程），</p>
+<p>对于子进程p3225，执行完第一次循环后，i=1，接着执行fork，新增一个进程p3227，</p>
+<p>对于此进程，</p>
+<p>p3224-&gt;p3225（当前进程）-&gt;p3227（被创建的子进程）。</p>
+<p>所以打印中间两行结果：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span> parent <span class="number">2043</span> <span class="number">3224</span> <span class="number">3226</span></span><br><span class="line"><span class="number">1</span> parent <span class="number">3224</span> <span class="number">3225</span> <span class="number">3227</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>第二步创建了两个进程p3226，p3227，这两个进程执行完printf函数后就结束了，</p>
+<p>因为这两个进程无法进入第三次循环，无法fork，该执行return 0了，其他进程也是如此。</p>
+<p>打印出结果：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span> child     <span class="number">1</span> <span class="number">3227</span>    <span class="number">0</span></span><br><span class="line"><span class="number">1</span> child     <span class="number">1</span> <span class="number">3226</span>    <span class="number">0</span></span><br></pre></td></tr></table></figure>
+<p>但是p3226，p3227的父进程难道不该是p3224和p3225吗，怎么会是1呢？</p>
+<p>牵扯到进程的创建和死亡的过程，</p>
+<p>在p3224和p3225执行完第二个循环后，main函数就该退出了，</p>
+<p>也即进程该死亡了，因为它已经做完所有事情了。</p>
+<p>p3224和p3225死亡后，</p>
+<p>p3226，p3227就没有父进程了，这在操作系统是不被允许的，</p>
+<p>所以p3226，p3227的父进程就被置为p1了，p1是永远不会死亡的，</p>
+<p>为什么P1不会死亡，感兴趣可以查阅相关资料。</p>
+</li>
+</ol>
+<p>总结一下，这个程序执行的流程如下：</p>
+<p><img src="/images/20170402/1.gif" alt=""></p>
+<p>这个程序最终产生了3个子进程，执行过6次printf（）函数。</p>
+<h2 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h2><p>最后再来道例题。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span>  </span><br><span class="line"></span>&#123;  </span><br><span class="line">   <span class="keyword">int</span> i=<span class="number">0</span>;  </span><br><span class="line">   <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;<span class="number">3</span>;i++)&#123;  </span><br><span class="line">       <span class="keyword">pid_t</span> fpid=fork();  </span><br><span class="line">       <span class="keyword">if</span>(fpid==<span class="number">0</span>)  </span><br><span class="line">           <span class="built_in">printf</span>(<span class="string">"son/n"</span>);  </span><br><span class="line">       <span class="keyword">else</span>  </span><br><span class="line">           <span class="built_in">printf</span>(<span class="string">"father/n"</span>);  </span><br><span class="line">   &#125;  </span><br><span class="line">   <span class="keyword">return</span> <span class="number">0</span>;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出为：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">father</span><br><span class="line">son</span><br><span class="line">father</span><br><span class="line">father</span><br><span class="line">father</span><br><span class="line">father</span><br><span class="line">son</span><br><span class="line">son</span><br><span class="line">father</span><br><span class="line">son</span><br><span class="line">son</span><br><span class="line">son</span><br><span class="line">father</span><br><span class="line">son</span><br></pre></td></tr></table></figure>
+<p>这里就不做详细解释了，只做一个大概的分析。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>        i=<span class="number">0</span>         <span class="number">1</span>           <span class="number">2</span></span><br><span class="line">          father     father     father</span><br><span class="line">                               	son</span><br><span class="line">                       son       father</span><br><span class="line">                                   son</span><br><span class="line">           son       father     father</span><br><span class="line">                                   son</span><br><span class="line">                      	son      father</span><br><span class="line">                                   son</span><br></pre></td></tr></table></figure>
+<p>其中每一行分别代表一个进程的运行打印结果。</p>
+<p>由于调度不同，所以打印顺序不一致。</p>
+<p>注意对于这种N次循环的情况，</p>
+<p>并不能总结如下规律：</p>
+<p>执行printf函数的次数为<del>2*（1+2+4+……+2^(N-1)）</del>次，</p>
+<p>创建的子进程数为<del>1+2+4+……+2^(N-1)</del>个，</p>
+<p>这是错误的！！！</p>
+<p>具体规律可以查阅资料查看详细数学推导。</p>
+<p>同时，大家如果想测一下一个程序中到底创建了几个子进程，</p>
+<p>最好的方法就是调用printf函数打印该进程的pid，</p>
+<p>也即调用printf(“%d/n”,getpid());或者通过printf(“+/n”);</p>
+<p>来判断产生了几个进程。</p>
+<p>有人想通过调用printf(“+”);来统计创建了几个进程，这是不妥当的。</p>
+<p>分析代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;  </span><br><span class="line">    <span class="keyword">pid_t</span> fpid;<span class="comment">//fpid表示fork函数返回的值  </span></span><br><span class="line">    <span class="comment">//printf("fork!");  </span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"fork!/n"</span>);  </span><br><span class="line">    fpid = fork();  </span><br><span class="line">    <span class="keyword">if</span> (fpid &lt; <span class="number">0</span>)  </span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"error in fork!"</span>);  </span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (fpid == <span class="number">0</span>)  </span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"I am the child process, my process id is %d/n"</span>, getpid());  </span><br><span class="line">    <span class="keyword">else</span>  </span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"I am the parent process, my process id is %d/n"</span>, getpid());  </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>执行结果如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">fork!</span><br><span class="line">I am the parent process, my process id is <span class="number">3361</span></span><br><span class="line">I am the child process, my process id is <span class="number">3362</span></span><br></pre></td></tr></table></figure>
+<p>如果把语句printf(“fork!/n”);注释掉，执行printf(“fork!”);</p>
+<p>则新的程序的执行结果是：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">fork!I am the parent process, my process id is <span class="number">3298</span></span><br><span class="line">fork!I am the child process, my process id is <span class="number">3299</span></span><br></pre></td></tr></table></figure>
+<p>程序的唯一的区别就在于一个/n回车符号，但第二种fork!却被打印两次为什么呢？</p>
+<p>这就跟printf的缓冲机制有关了，printf某些内容时，</p>
+<p>操作系统仅仅是把该内容放到了stdout的缓冲队列里了,并没有实际的写到屏幕上。</p>
+<p>但是,只要看到有/n 则会立即刷新stdout,因此就马上能够打印了。</p>
+<p>运行了printf(“fork!”)后,“fork!”仅仅被放到了缓冲里,程序运行到fork时缓冲里面的“fork!”  被子进程复制过去了。</p>
+<p>因此在子进程度stdout缓冲里面就也有了fork! 。</p>
+<p>所以,你最终看到的会是fork!  被printf了2次！！！！</p>
+<p>而运行printf(“fork! /n”)后,“fork!”被立即打印到了屏幕上,之后fork到的子进程里的stdout缓冲里不会有fork! 内容。</p>
+<p>因此你看到的结果会是fork! 被printf了1次！！！！</p>
+<p>所以说printf(“+”);不能正确地反应进程的数量。</p>
+<p>最后以一道练习题结束：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>* argv[])</span>  </span><br><span class="line"></span>&#123;  </span><br><span class="line">   fork();  </span><br><span class="line">   fork() &amp;&amp; fork() || fork();  </span><br><span class="line">   fork();  </span><br><span class="line">   <span class="keyword">return</span> <span class="number">0</span>;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>问题是不算main这个进程自身，程序到底创建了多少个进程?</p>
+<p>先用代码分析：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>* argv[])</span>  </span><br><span class="line"></span>&#123;  </span><br><span class="line">   fork();  </span><br><span class="line">   fork() &amp;&amp; fork() || fork();  </span><br><span class="line">   fork();  </span><br><span class="line">   <span class="built_in">printf</span>(<span class="string">"+/n"</span>);  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>答案是总共20个进程，除去main进程，还有19个进程。</p>
+<p>第一个fork和最后一个fork肯定是会执行的。</p>
+<p>主要在中间3个fork上，可以画一个图进行描述。</p>
+<p>这里就需要注意&amp;&amp;和||运算符。</p>
+<p>A&amp;&amp;B，如果A=0，就没有必要继续执行&amp;&amp;B了；A非0，就需要继续执行&amp;&amp;B。</p>
+<p>A||B，如果A非0，就没有必要继续执行||B了，A=0，就需要继续执行||B。</p>
+<p>fork()对于父进程和子进程的返回值是不同的，按照上面的A&amp;&amp;B和A||B的分支进行画图，可以得出5个分支。</p>
+<p><img src="/images/20170402/2.gif" alt=""></p>
+<p>因此进程总数为2乘5乘2=20，减去主进程，即为19个。</p>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[广度优先搜索]]></title>
       <url>//boyoung.me/2017/02/15/%E5%B9%BF%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2/</url>
       <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>广度优先搜索，又称宽度优先搜索，即BFS，是连通图的一种遍历策略。</p>
