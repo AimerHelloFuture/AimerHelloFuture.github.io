@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="//boyoung.me/"/>
-  <updated>2017-04-18T09:29:13.393Z</updated>
+  <updated>2017-04-22T03:16:37.811Z</updated>
   <id>//boyoung.me/</id>
   
   <author>
@@ -14,6 +14,139 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>TCP连接</title>
+    <link href="//boyoung.me/2017/04/20/TCP%E8%BF%9E%E6%8E%A5/"/>
+    <id>//boyoung.me/2017/04/20/TCP连接/</id>
+    <published>2017-04-20T02:57:08.000Z</published>
+    <updated>2017-04-22T03:16:37.811Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="TCP连接状态"><a href="#TCP连接状态" class="headerlink" title="TCP连接状态"></a>TCP连接状态</h2><p>一条tcp连接，主动关闭的一方不可能出现的连接状态是()<a id="more"></a></p>
+<ol>
+<li>CLOSE_WAIT</li>
+<li>FIN_WAIT2</li>
+<li>TIME_WAIT</li>
+<li>FIN_WAIT1</li>
+</ol>
+<p>先来一张一目了然的图：</p>
+<p><img src="/images/20170420/1.png" alt=""></p>
+<p>现在来详细解释TCP连接建立与关闭过程中的状态。</p>
+<p>TCP连接过程是状态的转换，促使状态发生转换的因素包括用户调用、特定数据包以及超时等，</p>
+<p>具体状态如下所示： </p>
+<ol>
+<li><p><strong>CLOSED</strong> ：初始状态，表示没有任何连接。</p>
+</li>
+<li><p><strong>LISTEN</strong> ： Server 端的某个 Socket 正在监听来自远方的 TCP 端口的连接请求。 </p>
+</li>
+<li><p><strong>SYN_SENT</strong> ：发送连接请求后等待确认信息。当客户端 Socket 进行 Connect 连接时，</p>
+<p>会首先发送 SYN 包，随即进入 SYN_SENT状态，</p>
+<p>然后等待 Server 端发送三次握手中的第 2 个包。 </p>
+</li>
+<li><p><strong>SYN_RECEIVED</strong> ：收到一个连接请求后回送确认信息和对等的连接请求，然后等待确认信息。</p>
+<p>通常是建立 TCP 连接的三次握手过程中的一个中间状态，</p>
+<p>表示 Server 端的 Socket 接收到来自 Client 的 SYN 包，并作出回应。</p>
+<p>ESTABLISHED ：表示连接已经建立，可以进行数据传输。</p>
+</li>
+<li><p><strong>FIN_WAIT_1</strong> ：主动关闭连接的一方等待对方返回 ACK 包。</p>
+<p>若 Socket 在 ESTABLISHED 状态下主动关闭连接并向对方发送 FIN 包（表示己方不再有数据需要发送），</p>
+<p>则进入 FIN_WAIT<em>1 状态，等待对方返回 ACK 包，此后还能读取数据，但不能发送数据。</em></p>
+<p><em>在正常情况下，无论对方处于何种状态，都应该马上返回 ACK 包，</em></p>
+<p>_所以 FIN_WAIT_1 状态一般很难见到。 </p>
+</li>
+<li><p><strong>FIN_WAIT_2</strong> ：主动关闭连接的一方收到对方返回的 ACK 包后，等待对方发送 FIN 包。</p>
+<p>处于 FIN_WAIT_1 状态下的 Socket 收到了对方返回的 ACK 包后，便进入 FIN_WAIT_2 状态。</p>
+<p>由于 FIN_WAIT<em>2 状态下的 Socket 需要等待对方发送的 FIN 包，所有常常可以看到。</em></p>
+<p>_若在 FIN_WAIT_1 状态下收到对方发送的同时带有 FIN 和 ACK 的包时，</p>
+<p>则直接进入 TIME_WAIT 状态，无须经过FIN_WAIT_2 状态。</p>
+</li>
+<li><p><strong>TIME_WAIT</strong> ：主动关闭连接的一方收到对方发送的 FIN 包后返回 ACK 包</p>
+<p>（表示对方也不再有数据需要发送，此后不能再读取或发送数据），</p>
+<p>然后等待足够长的时间（ 2MSL ）以确保对方接收到 ACK 包</p>
+<p>（考虑到丢失 ACK 包的可能和迷路重复数据包的影响），</p>
+<p>最后回到 CLOSED 状态，释放网络资源。 </p>
+</li>
+<li><p><strong>CLOSE_WAIT</strong> ：表示被动关闭连接的一方在等待关闭连接。</p>
+<p>当收到对方发送的 FIN 包后（表示对方不再有数据需要发送），相应的返回 ACK 包，</p>
+<p>然后进入 CLOSE_WAIT 状态。在该状态下，若己方还有数据未发送，</p>
+<p>则可以继续向对方进行发送，但不能再读取数据，直到数据发送完毕。</p>
+</li>
+<li><p><strong>LAST_ACK</strong> ：被动关闭连接的一方在 CLOSE_WAIT 状态下完成数据的发送后</p>
+<p>便可向对方发送 FIN 包（表示己方不再有数据需要发送），然后等待对方返回 ACK 包。</p>
+<p>收到 ACK 包后便回到 CLOSED 状态，释放网络资源。 </p>
+</li>
+<li><p><strong>CLOSING</strong> ：比较罕见的例外状态。正常情况下，发送 FIN 包后应该先收到（或同时收到）</p>
+<p>对方的 ACK 包，再收到对方的 FIN 包，而 CLOSING 状态表示发送 FIN 包后并没有收到对方的 ACK 包，</p>
+<p>却已收到了对方的 FIN 包。有两种情况可能导致这种状态：</p>
+<p>其一，如果双方几乎在同时关闭连接，那么就可能出现双方同时发送 FIN 包的情况；</p>
+<p>其二，如果 ACK 包丢失而对方的 FIN 包很快发出，也会出现 FIN 先于 ACK 到达。</p>
+</li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;TCP连接状态&quot;&gt;&lt;a href=&quot;#TCP连接状态&quot; class=&quot;headerlink&quot; title=&quot;TCP连接状态&quot;&gt;&lt;/a&gt;TCP连接状态&lt;/h2&gt;&lt;p&gt;一条tcp连接，主动关闭的一方不可能出现的连接状态是()
+    
+    </summary>
+    
+    
+      <category term="卖萌打滚求offer" scheme="//boyoung.me/tags/%E5%8D%96%E8%90%8C%E6%89%93%E6%BB%9A%E6%B1%82offer/"/>
+    
+      <category term="blog" scheme="//boyoung.me/tags/blog/"/>
+    
+      <category term="计算机网络" scheme="//boyoung.me/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>计算机中的数</title>
+    <link href="//boyoung.me/2017/04/04/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%AD%E7%9A%84%E6%95%B0/"/>
+    <id>//boyoung.me/2017/04/04/计算机中的数/</id>
+    <published>2017-04-04T03:24:16.000Z</published>
+    <updated>2017-04-22T03:33:01.684Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>因为计算机的二进制表示特性，造就了与自然界数的运算产生了有趣的差异。</p>
+<p>比如：一个数的绝对值一定是非负数吗？<a id="more"></a></p>
+<h2 id="math-h的abs返回值"><a href="#math-h的abs返回值" class="headerlink" title="math.h的abs返回值"></a>math.h的abs返回值</h2><p>math.h的abs返回值()</p>
+<ol>
+<li>不可能是负数</li>
+<li>不可能是正数</li>
+<li>都有可能</li>
+<li>不可能是0</li>
+</ol>
+<p>首先来看c中的函数申明：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">abs</span><span class="params">(<span class="keyword">int</span> num)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>正常情况下,</p>
+<p><strong>num为0或正数时</strong>，函数返回num值；</p>
+<p><strong>当num为负数且不是最小的负数时</strong>，函数返回num的对应绝对值数，</p>
+<p>即将内存中该二进制位的符号位取反，并把后面数值位取反加一；</p>
+<p><strong>当num为最小的负数时</strong>（即0x80000000），由于正数里int类型32位表示不了这个数的绝对值，</p>
+<p>所以依然返回该负数。</p>
+<p>这就是设计这个库函数的时候为什么把返回值设置为int而不是unsigned的原因。</p>
+<p>因此答案是C。</p>
+<p> 因为负数的范围比正数大一个,比如8位的二进制，可以表示范围为-128~127</p>
+<p>所以abs(-128)可能并不能表示为128，所以只能返回原值。</p>
+<p><img src="/images/20170404/1.png" alt=""></p>
+<p>其实由于计算机数的表示，这种例子还有很多很多，</p>
+<p>等哪天想起便继续补充。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;因为计算机的二进制表示特性，造就了与自然界数的运算产生了有趣的差异。&lt;/p&gt;
+&lt;p&gt;比如：一个数的绝对值一定是非负数吗？
+    
+    </summary>
+    
+    
+      <category term="卖萌打滚求offer" scheme="//boyoung.me/tags/%E5%8D%96%E8%90%8C%E6%89%93%E6%BB%9A%E6%B1%82offer/"/>
+    
+      <category term="blog" scheme="//boyoung.me/tags/blog/"/>
+    
+      <category term="二进制" scheme="//boyoung.me/tags/%E4%BA%8C%E8%BF%9B%E5%88%B6/"/>
+    
+  </entry>
   
   <entry>
     <title>操作系统fork()</title>
@@ -169,9 +302,9 @@
     </summary>
     
     
-      <category term="blog" scheme="//boyoung.me/tags/blog/"/>
-    
       <category term="卖萌打滚求offer" scheme="//boyoung.me/tags/%E5%8D%96%E8%90%8C%E6%89%93%E6%BB%9A%E6%B1%82offer/"/>
+    
+      <category term="blog" scheme="//boyoung.me/tags/blog/"/>
     
       <category term="操作系统" scheme="//boyoung.me/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
     
@@ -241,13 +374,13 @@
     </summary>
     
     
-      <category term="blog" scheme="//boyoung.me/tags/blog/"/>
-    
       <category term="卖萌打滚求offer" scheme="//boyoung.me/tags/%E5%8D%96%E8%90%8C%E6%89%93%E6%BB%9A%E6%B1%82offer/"/>
     
-      <category term="图算法" scheme="//boyoung.me/tags/%E5%9B%BE%E7%AE%97%E6%B3%95/"/>
+      <category term="blog" scheme="//boyoung.me/tags/blog/"/>
     
       <category term="数据结构" scheme="//boyoung.me/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"/>
+    
+      <category term="图算法" scheme="//boyoung.me/tags/%E5%9B%BE%E7%AE%97%E6%B3%95/"/>
     
   </entry>
   
@@ -407,9 +540,9 @@
     </summary>
     
     
-      <category term="blog" scheme="//boyoung.me/tags/blog/"/>
-    
       <category term="卖萌打滚求offer" scheme="//boyoung.me/tags/%E5%8D%96%E8%90%8C%E6%89%93%E6%BB%9A%E6%B1%82offer/"/>
+    
+      <category term="blog" scheme="//boyoung.me/tags/blog/"/>
     
       <category term="数据结构" scheme="//boyoung.me/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"/>
     
@@ -442,9 +575,9 @@
     </summary>
     
     
-      <category term="blog" scheme="//boyoung.me/tags/blog/"/>
-    
       <category term="卖萌打滚求offer" scheme="//boyoung.me/tags/%E5%8D%96%E8%90%8C%E6%89%93%E6%BB%9A%E6%B1%82offer/"/>
+    
+      <category term="blog" scheme="//boyoung.me/tags/blog/"/>
     
       <category term="数据结构" scheme="//boyoung.me/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"/>
     

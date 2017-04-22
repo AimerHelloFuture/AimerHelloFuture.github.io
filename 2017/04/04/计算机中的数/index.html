@@ -15,15 +15,21 @@
 
 
 
-<meta name="description">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Boyoung">
-<meta property="og:url" content="//boyoung.me/archives/2015/07/index.html">
+<meta name="description" content="前言因为计算机的二进制表示特性，造就了与自然界数的运算产生了有趣的差异。
+比如：一个数的绝对值一定是非负数吗？">
+<meta property="og:type" content="article">
+<meta property="og:title" content="计算机中的数">
+<meta property="og:url" content="//boyoung.me/2017/04/04/计算机中的数/index.html">
 <meta property="og:site_name" content="Boyoung">
-<meta property="og:description">
+<meta property="og:description" content="前言因为计算机的二进制表示特性，造就了与自然界数的运算产生了有趣的差异。
+比如：一个数的绝对值一定是非负数吗？">
+<meta property="og:image" content="//boyoung.me/images/20170404/1.png">
+<meta property="og:updated_time" content="2017-04-22T03:33:01.684Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Boyoung">
-<meta name="twitter:description">
+<meta name="twitter:title" content="计算机中的数">
+<meta name="twitter:description" content="前言因为计算机的二进制表示特性，造就了与自然界数的运算产生了有趣的差异。
+比如：一个数的绝对值一定是非负数吗？">
+<meta name="twitter:image" content="//boyoung.me/images/20170404/1.png">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -55,7 +61,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>Archives: 2015/7 | Boyoung</title>
+<title>计算机中的数 | Boyoung</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -65,8 +71,8 @@
         fancybox: true,
         animate: true,
         isHome: false,
-        isPost: false,
-        isArchive: true,
+        isPost: true,
+        isArchive: false,
         isTag: false,
         isCategory: false,
         fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
@@ -280,89 +286,214 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap">
+      <div class="body-wrap"><article id="post-计算机中的数" class="article article-type-post" itemscope itemprop="blogPost">
   
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2015" class="archive-year">2015</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-          <div class="article-meta">
-              <a href="/2015/07/11/Hexo博客/" class="archive-article-date">
-      <time datetime="2015-07-11T13:07:09.000Z" itemprop="datePublished">07-11</time>
+    <div class="article-meta">
+      <a href="/2017/04/04/计算机中的数/" class="article-date">
+      <time datetime="2017-04-04T03:24:16.000Z" itemprop="datePublished">2017-04-04</time>
 </a>
 
 
-        </div>
-         
+    </div>
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2015/07/11/Hexo博客/">Hexo博客</a>
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      计算机中的数
     </h1>
   
 
-        <div class="article-info info-on-archive">
-          
+      </header>
+      
+      <div class="article-info article-info-post">
+        
 
-          
+        
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hexo起始/">Hexo起始</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/blog/">blog</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/环境搭配/">环境搭配</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/blog/">blog</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/二进制/">二进制</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/卖萌打滚求offer/">卖萌打滚求offer</a></li></ul>
     </div>
 
-        </div>
         <div class="clearfix"></div>
-    </header>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>因为计算机的二进制表示特性，造就了与自然界数的运算产生了有趣的差异。</p>
+<p>比如：一个数的绝对值一定是非负数吗？<a id="more"></a></p>
+<h2 id="math-h的abs返回值"><a href="#math-h的abs返回值" class="headerlink" title="math.h的abs返回值"></a>math.h的abs返回值</h2><p>math.h的abs返回值()</p>
+<ol>
+<li>不可能是负数</li>
+<li>不可能是正数</li>
+<li>都有可能</li>
+<li>不可能是0</li>
+</ol>
+<p>首先来看c中的函数申明：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">abs</span><span class="params">(<span class="keyword">int</span> num)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>正常情况下,</p>
+<p><strong>num为0或正数时</strong>，函数返回num值；</p>
+<p><strong>当num为负数且不是最小的负数时</strong>，函数返回num的对应绝对值数，</p>
+<p>即将内存中该二进制位的符号位取反，并把后面数值位取反加一；</p>
+<p><strong>当num为最小的负数时</strong>（即0x80000000），由于正数里int类型32位表示不了这个数的绝对值，</p>
+<p>所以依然返回该负数。</p>
+<p>这就是设计这个库函数的时候为什么把返回值设置为int而不是unsigned的原因。</p>
+<p>因此答案是C。</p>
+<p> 因为负数的范围比正数大一个,比如8位的二进制，可以表示范围为-128~127</p>
+<p>所以abs(-128)可能并不能表示为128，所以只能返回原值。</p>
+<p><img src="/images/20170404/1.png" alt=""></p>
+<p>其实由于计算机数的表示，这种例子还有很多很多，</p>
+<p>等哪天想起便继续补充。</p>
+
+      
+    </div>
+    
   </div>
-</article>
   
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-          <div class="article-meta">
-              <a href="/2015/07/10/Hello-Future/" class="archive-article-date">
-      <time datetime="2015-07-10T04:10:26.000Z" itemprop="datePublished">07-10</time>
-</a>
-
-
-        </div>
-         
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2015/07/10/Hello-Future/">Hello Future</a>
-    </h1>
-  
-
-        <div class="article-info info-on-archive">
-          
-
-          
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/essay/">essay</a></li></ul>
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2017/04/04/计算机中的数/">计算机中的数</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">Boyoung</a></p>
+        <p><span>发布时间:</span>2017-04-04, 11:24:16</p>
+        <p><span>最后更新:</span>2017-04-22, 11:33:01</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2017/04/04/计算机中的数/" title="计算机中的数">//boyoung.me/2017/04/04/计算机中的数/</a>
+            <span class="copy-path" data-clipboard-text="原文: //boyoung.me/2017/04/04/计算机中的数/　　作者: Boyoung" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
     </div>
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2017/04/20/TCP连接/">
+                    TCP连接
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2017/04/02/操作系统fork()/">
+                    操作系统fork()
+                </a>
+            </div>
+        
+    </nav>
+
+  
 </article>
-  
-  
-    </div></section>
-  
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#math-h的abs返回值"><span class="toc-number">2.</span> <span class="toc-text">math.h的abs返回值</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
 
     
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"计算机中的数　| Boyoung　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
 
+    
+</div>
+
+
+
+
+
+
+
+    
+      <div class="duoshuo" id="comments">
+    <div id="comment-box" ></div>
+    <div class="ds-thread" id="ds-thread" data-thread-key="2017/04/04/计算机中的数/" data-title="计算机中的数" data-url="//boyoung.me/2017/04/04/计算机中的数/"></div>
+    <script>
+        var duoshuoQuery = {short_name:"Boyoung"};
+        var loadComment = function(){
+            var d = document, s = d.createElement('script');
+            s.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+            s.async = true; s.charset = 'UTF-8';
+            (d.head || d.body).appendChild(s);
+        }
+
+        
+    </script>
+    
+    <script> loadComment(); </script>
+
+</div>
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2017/04/20/TCP连接/" title="上一篇: TCP连接">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2017/04/02/操作系统fork()/" title="下一篇: 操作系统fork()">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/04/20/TCP连接/">TCP连接</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/04/计算机中的数/">计算机中的数</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/02/操作系统fork()/">操作系统fork()</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/15/广度优先搜索/">广度优先搜索</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/02/10/坂井泉水，负けないで/">坂井泉水，负けないで</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/09/15/线性表/">线性表</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/09/10/数据结构概念总览/">数据结构概念总览</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/08/02/VS中scanf函数说明/">VS中scanf函数说明</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/07/11/Hexo博客/">Hexo博客</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/07/10/Hello-Future/">Hello Future</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
 </div>
       <footer id="footer">
     <div class="outer">
