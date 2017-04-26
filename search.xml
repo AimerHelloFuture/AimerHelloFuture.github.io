@@ -4,6 +4,64 @@
   
     
     <entry>
+      <title><![CDATA[沙漠储油点问题]]></title>
+      <url>//boyoung.me/2017/04/25/%E6%B2%99%E6%BC%A0%E5%82%A8%E6%B2%B9%E7%82%B9%E9%97%AE%E9%A2%98/</url>
+      <content type="html"><![CDATA[<h2 id="前言，引发"><a href="#前言，引发" class="headerlink" title="前言，引发"></a>前言，引发</h2><p>来源这道题：</p>
+<p>一个士兵要过一个120m的有毒的下水道，身上最多只能带90个解药，</p>
+<p>每走一米需要消耗一个解药，最少需要多少解药才能成功的走过下水道？</p>
+<p>一开始看到，看了半天，愣了半天？？？这是什么意思啊，这怎么过得去啊？？？<a id="more"></a></p>
+<p>后来才理解可以走多次，在路程中可以存储一下解药。</p>
+<p>现来介绍类似的问题即沙漠储油点问题。</p>
+<h2 id="沙漠储油点"><a href="#沙漠储油点" class="headerlink" title="沙漠储油点"></a>沙漠储油点</h2><p>一辆重型卡车欲穿过1000公里的沙漠，卡车耗油为1升/公里，</p>
+<p>卡车总载油能力为500公升。显然卡车一次是过不了沙漠的。</p>
+<p>因此司机必须设法在沿途建立几个储油点，使卡车能顺利穿越沙漠，</p>
+<p>试问司机如何建立这些储油点？每一储油点应存多少油，才能使卡车以消耗最少油的代价通过沙漠？</p>
+<p>算法分析：</p>
+<p>编程计算及打印建立的贮油点序号，各贮油点距沙漠边沿出发的距离以及存油量。</p>
+<p><img src="/images/20170425/1.png" alt=""></p>
+<p>设dis[i] 为第i个贮油点至终点(i=0)的距离；</p>
+<p>oil[i] 为第i个贮油点的存贮油量；</p>
+<p>我们可以用倒推法来解决这个问题。从终点向始点倒推，逐一求出每个贮油点的位置及存油量。</p>
+<p>此图表示倒推时的返回点：</p>
+<p><img src="/images/20170425/2.png" alt=""></p>
+<p>从贮油点i向贮油点i+1倒推的策略是，卡车在点i和点i+1间往返若干次。</p>
+<p>卡车每次返回i+1处时正好耗尽500公升汽油，而每次从i+1出发时又必须装足500公升汽油。</p>
+<p>两点之间的距离必须满足在耗油最少的条件下使i点贮足i乘500分升汽油的要求(0&lt;=i&lt;=n-1)。</p>
+<p>具体地讲，第一个贮油点i=1应距终点i=0处500km且在该处贮藏500公升汽油，</p>
+<p>这样才能保证卡车能由i=1处到达终点i=0处，这就是说</p>
+<p>​                    dis[1]=500，oil[1]=500;</p>
+<p>为了在i=1处贮藏500公升汽油，卡车至少从i=2处开两趟满载油的车至i=1处</p>
+<p>（因为最多装500公升，所以需要两趟才可以在i=1处贮藏500公升）。</p>
+<p>所以i=2处至少贮有2乘500公升汽油，即oil[2]=500乘2=1000。</p>
+<p>另外，再加上从i=1返回至i=2处的一趟空载，合计往返3次。</p>
+<p>三次往返路程的耗油量按最省要求只能为500公升。即</p>
+<p>​                    dis[2]=dis[1]+500/3;</p>
+<p><img src="/images/20170425/3.png" alt=""></p>
+<p>为了在i=2处贮存1000公升汽油，卡车至少从i=3处开三趟满载油的车至i=2处。</p>
+<p>报以i=3处至少贮有3乘500公升汽油，即oil[3]=500乘3=1500。</p>
+<p>加上i=2至i=3处的二趟返程空车，合计5次。</p>
+<p>路途耗油量也应为500公升，即</p>
+<p>​                    dis[3]=dis[2]+500/5;</p>
+<p><img src="/images/20170425/4.png" alt=""></p>
+<p>依此类推，为了在i=k处贮藏k乘500公升汽油，</p>
+<p>卡车至少从i=k+1处开k趟满载车至i=k处，即</p>
+<p>​                    oil[k+1]=[k+1]乘500=oil[k]+500，</p>
+<p>加上从i=k处返回i=k+1的k-1趟返程空间，合计2k-1次。</p>
+<p>这2k-1次总耗油量按最省要求为500公升，即</p>
+<p>​                    dis[k+1]=dis[k]+500/(2k-1);</p>
+<p><img src="/images/20170425/5.png" alt=""></p>
+<p>最后，i=n至始点的距离为1000-dis[n],oil[n]=500乘n。</p>
+<p>为了在i=n处取得n乘500公升汽油，卡车至少从始点开n+1次满载车至i=n，</p>
+<p>加上从i=n返回始点的n趟返程空车，合计2n+1次，</p>
+<p>2n+1趟的总耗油量应正好为(1000-dis[n])乘(2n+1)，</p>
+<p>即始点藏油为oil[n]+(1000-dis[n])乘(2n+1)。</p>
+<p>用C语言描述如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span> </span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdlib.h&gt;</span> </span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAX_STATION_NUM 32 <span class="comment">/*定义最大允许的储油点数目*/</span> </span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span><br><span class="line"></span>&#123; </span><br><span class="line">	<span class="keyword">int</span> k, i; </span><br><span class="line">	<span class="keyword">double</span> wDistance; <span class="comment">/*wDistance是终点至当前贮油点的距离*/</span> </span><br><span class="line">	<span class="keyword">double</span> storedOil[MAX_STATION_NUM];<span class="comment">/*storedOil[i]是第i个储油点的储油量*/</span> </span><br><span class="line">	<span class="keyword">double</span> distance[MAX_STATION_NUM]; <span class="comment">/*distance[i]是第i个储油点到终点的距离*/</span> </span><br><span class="line">	<span class="built_in">puts</span>(<span class="string">"The whole distance is 1000km,and the result is:\n"</span>); </span><br><span class="line">	<span class="built_in">puts</span>(<span class="string">"station distance(km) oil(l)"</span>); </span><br><span class="line">	k = <span class="number">1</span>; </span><br><span class="line">	wDistance = <span class="number">500</span>; <span class="comment">/*从i=1处开始向始点倒推*/</span> </span><br><span class="line">	distance[<span class="number">1</span>] = <span class="number">500</span>; </span><br><span class="line">	storedOil[<span class="number">1</span>] = <span class="number">500</span>; </span><br><span class="line">	<span class="keyword">while</span>(<span class="number">1</span>) </span><br><span class="line">	&#123; </span><br><span class="line">		k++; </span><br><span class="line">		wDistance += <span class="number">500</span> / (<span class="number">2</span> * k - <span class="number">1</span>); </span><br><span class="line">		distance[k] = wDistance; </span><br><span class="line">		storedOil[k] = storedOil[k<span class="number">-1</span>] + <span class="number">500</span>; </span><br><span class="line">		<span class="keyword">if</span>(wDistance &gt;= <span class="number">1000</span>) </span><br><span class="line">		<span class="keyword">break</span>; </span><br><span class="line">	&#125; </span><br><span class="line">	distance[k] = <span class="number">1000</span>; <span class="comment">/*置始点至终点的距离值*/</span> </span><br><span class="line">	storedOil[k] = (<span class="number">1000</span> - distance[k<span class="number">-1</span>]) * (<span class="number">2</span> * k + <span class="number">1</span>) + storedOil[k<span class="number">-1</span>]; <span class="comment">/*求始点藏油量*/</span> </span><br><span class="line">	<span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; k; i++) <span class="comment">/*由始点开始逐一打印始点至当前贮油点的距离和藏油量*/</span> </span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"%4d %6.3f %6.3f\n"</span>, i, <span class="number">1000</span>-distance[k-i], storedOil[k-i]); </span><br><span class="line">	system(<span class="string">"pause"</span>); </span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="储油点扩展问题"><a href="#储油点扩展问题" class="headerlink" title="储油点扩展问题"></a>储油点扩展问题</h2><p><a href="http://www.cnblogs.com/lulup/p/4133431.html" target="_blank" rel="external">运油问题</a>。</p>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[TCP连接]]></title>
       <url>//boyoung.me/2017/04/20/TCP%E8%BF%9E%E6%8E%A5/</url>
       <content type="html"><![CDATA[<h2 id="TCP连接状态"><a href="#TCP连接状态" class="headerlink" title="TCP连接状态"></a>TCP连接状态</h2><p>一条tcp连接，主动关闭的一方不可能出现的连接状态是()<a id="more"></a></p>
